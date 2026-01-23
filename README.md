@@ -1,157 +1,153 @@
 # Banking Customer Churn Analysis & Prediction
 
 ## Project Overview
-This project analyses customer churn behaviour and builds a predictive machine learning model using simulated retail banking data, completed as part of the Lloyds Banking Group Data Science job simulation.
+This project explores customer churn behaviour and builds a predictive machine learning model using simulated retail banking data.  
+The goal is to identify customers at risk of churn and understand the behavioural drivers behind churn in order to support data-driven retention strategies.
 
-The objective is to identify customers at risk of churn and uncover the key behavioural drivers behind churn in order to inform data-driven retention strategies.
-
-The project follows an end-to-end data science workflow, from exploratory data analysis (EDA) and preprocessing through to model development, evaluation, and business interpretation.
+The project follows a complete data science workflow:
+- Exploratory data analysis (EDA)
+- Data cleaning and preprocessing
+- Predictive modelling
+- Model evaluation
+- Business interpretation
 
 ---
 
 ## Business Context
-Customer churn represents a significant risk to retail banks, particularly among digitally active customers and small business owners.  
-Understanding *why* customers leave is just as important as predicting *who* is likely to leave.
-
-This project focuses on:
-- Digital engagement patterns
-- Spending behaviour
-- Customer service interactions
-- Demographic context
-
-The final output is an interpretable model that supports actionable business decisions rather than maximising accuracy alone.
+Customer churn presents a significant challenge for retail banks, particularly in highly competitive digital banking environments.  
+Understanding both **who is likely to churn** and **why customers churn** enables targeted retention actions and improved customer experience.
 
 ---
 
-## Data Description
-The dataset consists of simulated customer-level banking data split across multiple sources:
+## 📁 Project Structure
 
-- **Customer Demographics**: age, gender, marital status, income level  
-- **Transaction History**: transaction count, total spend, average spend  
-- **Customer Service Interactions**: total interactions, unresolved issues  
-- **Online Activity**: login frequency and service usage  
-- **Target Variable**: churn status (0 = retained, 1 = churned)
-
-All data sources were merged into a single analytical dataset at customer level.
-
----
-
-## Project Structure
+```
 banking-customer-churn-analysis/
 │
 ├── data/
-│ └── raw/
-│ └── Customer_Churn_Data_Large.xlsx
+│   └── raw/
+│       └── Customer_Churn_Data_Large.xlsx
 │
 ├── notebooks/
-│ ├── 01_eda_customer_churn.ipynb
-│ └── 02_model_customer_churn.ipynb
-│
-├── reports/
-│ ├── Customer_Churn_Task1_Final_Report.pdf
-│ └── Customer_Churn_Task2_Business_Report.pdf
+│   └── customer_churn_analysis.ipynb
 │
 ├── .gitignore
 ├── README.md
 
+```
 
+---
+
+## Data Description
+The dataset consists of simulated customer-level banking data combined from multiple sources:
+- Customer demographics (age, gender, income level)
+- Transaction behaviour (transaction count, total spend, average spend)
+- Digital engagement (login frequency)
+- Customer service interactions (total interactions, unresolved issues)
+- Churn indicator (target variable)
+
+All sources were merged into a single analytical dataset at customer level.
 
 ---
 
 ## Task 1: Exploratory Data Analysis & Preprocessing
-### Key Activities
+
+### Key EDA Activities
 - Descriptive statistics (mean, median, variance, min/max)
 - Churn rate analysis
 - Behavioural comparisons between churned and retained customers
-- Visualisations including:
+- Visual analysis of:
   - Churn by age group
   - Login frequency vs churn
-  - Customer service issues vs churn
   - Transaction behaviour vs churn
-- Data cleaning and preprocessing:
-  - Missing value handling
-  - Feature aggregation
-  - Categorical encoding
-  - Feature scaling
-  - Dataset preparation for modelling
+  - Customer service interactions vs churn
 
-### Key Insights
-- Churn rate ≈ 20%
-- Lower login frequency is associated with higher churn
-- Spending behaviour is more informative than transaction volume
-- Customer service friction contributes to churn risk
-- Behavioural features outweigh demographic ones
+### Key EDA Findings
+- Overall churn rate ≈ **20%**
+- Customers with **lower login frequency** show higher churn risk
+- **Spending behaviour** is more informative than transaction volume
+- Unresolved customer service issues increase churn likelihood
+- Behavioural features are more predictive than demographic attributes
 
-A detailed Task 1 report is included in the `reports/` folder.
+### Data Cleaning & Preprocessing
+- Missing values handled through aggregation and validation checks
+- Categorical variables encoded using one-hot encoding
+- Numerical features scaled for modelling
+- Features aggregated to customer-level for consistency
+- Final dataset prepared for supervised learning
 
 ---
 
 ## Task 2: Predictive Modelling
-### Models Evaluated
-1. **Logistic Regression (Baseline)**
-   - High interpretability
-   - Limited predictive power (ROC-AUC ≈ 0.52)
 
-2. **Random Forest (Final Model)**
-   - Captures non-linear relationships
-   - Improved cross-validation performance (ROC-AUC ≈ 0.56)
-   - Selected as the final model
+### Model Selection
+Two models were evaluated:
 
-### Evaluation Metrics
-- Stratified train/test split
-- Cross-validation ROC-AUC
-- Confusion matrix
-- Precision, recall, F1-score
-- ROC curve analysis
+**Logistic Regression**
+- Interpretable baseline model
+- Limited predictive performance (ROC-AUC ≈ 0.52)
 
-### Key Results
-- Churn behaviour is weakly separable using available features
-- Model recall for churners is limited, reflecting realistic early-stage churn modelling
-- Results highlight the need for richer temporal and behavioural data
+**Random Forest (Final Model)**
+- Captures non-linear relationships
+- Improved cross-validation performance (ROC-AUC ≈ 0.56)
+- Selected as the final model due to better handling of behavioural patterns
+
+### Model Training & Evaluation
+- Stratified train-test split to preserve churn distribution
+- Cross-validation for generalisation assessment
+- Evaluation metrics:
+  - ROC-AUC
+  - Precision, Recall, F1-score
+  - Confusion Matrix
+
+### Model Performance Summary
+- Test ROC-AUC ≈ **0.52**
+- Churn recall ≈ **20%**
+- Model is better suited as a **risk screening tool** rather than a definitive classifier
 
 ---
 
-## Key Drivers of Churn
+## Key Drivers of Customer Churn
 Feature importance analysis from the Random Forest model identified:
 
-1. **Login Frequency** – strongest indicator of churn risk  
-2. **Spending Behaviour** – average and total spend  
-3. **Age** – moderate influence  
-4. **Transaction Count** – weaker than monetary value  
-5. **Customer Service Issues** – unresolved interactions increase churn risk  
+1. **Login Frequency** – strongest churn signal (digital disengagement)
+2. **Average & Total Spend** – declining spend increases churn risk
+3. **Age** – moderate influence
+4. **Transaction Count** – weaker than spending value
+5. **Customer Service Interactions** – unresolved issues contribute to churn
 6. **Demographics** – limited predictive impact
 
 ---
 
 ## Business Recommendations
-- Monitor digital disengagement as an early churn signal
-- Trigger proactive outreach for customers with declining login activity
-- Target customers with reduced spending using personalised offers
+- Monitor digital engagement as an early churn indicator
+- Trigger proactive outreach for customers with declining activity
+- Personalise offers for customers with reduced spending
 - Prioritise resolution of customer service issues
-- Use the model as a *risk triage tool* rather than a definitive decision engine
+- Use the model to **prioritise at-risk customers**, not as an absolute decision-maker
 
 ---
 
 ## Limitations & Future Improvements
 - Limited temporal depth of behavioural data
 - Aggregated features reduce predictive resolution
-- Potential improvements include:
+- Future improvements could include:
   - Time-series features
   - Product-level engagement metrics
   - Longer observation windows
-  - Cost-sensitive classification thresholds
+  - Threshold optimisation for recall-focused retention strategies
 
 ---
 
 ## Tools & Technologies
 - Python
 - pandas, numpy
-- matplotlib
 - scikit-learn
+- matplotlib
 - Jupyter Notebook
 
 ---
 
 ## Author
 **Ene Ogbe**  
-Data Analytics & Data Science Portfolio Project  
+Data Science & Analytics Portfolio Project
